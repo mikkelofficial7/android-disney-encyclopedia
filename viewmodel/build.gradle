@@ -30,20 +30,9 @@ android {
 }
 
 dependencies {
-    implementation ktxDefault.stdlib
-
-    implementation libraries.koin
-    implementation libraries.koinViewmodel
-    implementation libraries.koinScope
-    implementation libraries.javaxInject
-
-    implementation libraries.okhttpLogging
-    implementation libraries.retrofit
-    implementation libraries.retrofitGson
-    implementation libraries.coroutineAdapter
-    implementation libraries.retrofitMoshi
+    //view model
+    implementation androidX.lifecycleExtensions
+    implementation androidX.lifecycleVmExt
 
     api project(path: ':network')
-    api project(path: ':base')
-    api project(path: ':viewmodel')
 }
