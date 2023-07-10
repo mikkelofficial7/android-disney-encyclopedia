@@ -74,11 +74,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
-    fun showProgress() {
+    fun showProgressDialog() {
         if (!progress.isShowing) progress.show()
     }
 
-    fun hideProgress() {
+    fun hideProgressDialog() {
         if (progress.isShowing) progress.dismiss()
     }
 
