@@ -2,6 +2,7 @@ package com.ewide.test.disneys.di
 
 import android.content.Context
 import com.ewide.test.disneys.base.helper.NetworkHandler
+import com.ewide.test.disneys.network.Builder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

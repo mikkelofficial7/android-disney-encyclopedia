@@ -1,5 +1,6 @@
 package com.ewide.test.disneys.di
 
+import com.ewide.test.disneys.network.Api
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
