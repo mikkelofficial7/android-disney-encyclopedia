@@ -27,14 +27,37 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
+    implementation ktxDefault.stdlib
+    implementation ktxDefault.coroutinesCore
+    implementation ktxDefault.coroutinesAndroid
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // AndroidX
+    implementation androidX.appCompatX
+    implementation androidX.coreKtx
+
+    implementation androidX.recyclerX
+    implementation androidX.cardX
+    implementation androidX.fragmentKtx
+    implementation androidX.constraintLayout
+    implementation androidX.lifecycleExtensions
+    implementation androidX.lifecycleVmExt
+    implementation androidX.material
+
+    //network
+    implementation libraries.retrofit
+
+    // Dependency injection
+    implementation libraries.koinViewmodel
+    implementation libraries.javaxInject
+
+    //ssp
+    implementation libraries.ssp
+    implementation libraries.sdp
 }
