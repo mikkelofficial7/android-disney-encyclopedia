@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
+import com.ewide.test.disneys.base.exception.Failure
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     internal var viewBinding: VB? = null
