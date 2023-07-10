@@ -41,4 +41,6 @@ dependencies {
     implementation libraries.retrofitGson
     implementation libraries.coroutineAdapter
     implementation libraries.retrofitMoshi
+
+    api project(path: ':model')
 }
