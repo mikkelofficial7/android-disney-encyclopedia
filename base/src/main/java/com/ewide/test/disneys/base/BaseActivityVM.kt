@@ -6,8 +6,7 @@ import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
 abstract class BaseActivityVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClass<VM>) : BaseActivity<VB>() {
-
-    val baseViewModel: VM by viewModel(clazz = clazz)
+    internal val baseViewModel: VM by viewModel(clazz = clazz)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

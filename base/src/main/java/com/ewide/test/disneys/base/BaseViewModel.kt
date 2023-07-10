@@ -3,7 +3,7 @@ package com.ewide.test.disneys.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moviedbapp.base.exception.Failure
+import com.ewide.test.disneys.base.exception.Failure
 import com.example.moviedbapp.base.helper.NetworkHandler
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

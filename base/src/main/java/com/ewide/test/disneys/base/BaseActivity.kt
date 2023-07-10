@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
-    var viewBinding: VB? = null
+    internal var viewBinding: VB? = null
     private var mToolbar: Toolbar? = null
 
     private lateinit var progress: Dialog
