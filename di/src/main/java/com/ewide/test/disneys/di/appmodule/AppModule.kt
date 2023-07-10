@@ -1,6 +1,6 @@
 package com.ewide.test.disneys.di.appmodule
 
-import com.example.moviedbapp.di.koin.NetworkModule
+import com.ewide.test.disneys.di.NetworkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
