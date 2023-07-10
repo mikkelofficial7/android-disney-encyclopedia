@@ -1,13 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.ewide.test.disneys"
+        applicationId "com.ewide.test.mikkel"
         minSdk 24
         targetSdk 32
         versionCode 1
@@ -36,11 +37,41 @@ android {
 }
 
 dependencies {
+    implementation ktxDefault.stdlib
+    implementation ktxDefault.coroutinesCore
+    implementation ktxDefault.coroutinesAndroid
+
+    implementation androidX.appCompatX
+    implementation androidX.coreKtx
+
+    implementation androidX.recyclerX
+    implementation androidX.cardX
+    implementation androidX.fragmentKtx
+    implementation androidX.constraintLayout
+    implementation androidX.material
+
+    // image
+    implementation libraries.glide
+    implementation libraries.glideOkhttp
+    kapt libraries.glideCompiler
+
     // DI
     implementation libraries.koin
     implementation libraries.koinViewmodel
     implementation libraries.koinScope
     implementation libraries.javaxInject
+
+    // ui
+    implementation libraries.sdp
+    implementation libraries.ssp
+
+    // Unit Test
+    testImplementation testLibraries.junit
+    testImplementation testLibraries.mockito
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation testLibraries.junitRunner
+    androidTestImplementation testLibraries.espressoCore
 
     api project(path: ':di')
 }
