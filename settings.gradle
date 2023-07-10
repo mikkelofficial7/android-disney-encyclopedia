@@ -16,3 +16,4 @@ rootProject.name = "Disneys"
 include ':app'
 include ':base'
 include ':di'
+include ':network'
