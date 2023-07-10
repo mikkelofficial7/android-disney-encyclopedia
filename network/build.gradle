@@ -3,12 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("gradle.properties")))
+
 android {
     compileSdk 32
 
     defaultConfig {
         minSdk 24
         targetSdk 32
+
+        buildConfigField "String", "BASE_URL_API", localProperties['base_api_url']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
