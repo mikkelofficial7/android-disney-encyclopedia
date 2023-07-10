@@ -10,7 +10,7 @@ interface Api {
     @GET("character")
     suspend fun getAllCharacter(
         @Query("page") page: Int,
-        @Query("pageSize") pageSize: Int = 50,
+        @Query("pageSize") pageSize: Int = 10,
     ): ListCharacterResponse
 
     @GET("character/{id}")
