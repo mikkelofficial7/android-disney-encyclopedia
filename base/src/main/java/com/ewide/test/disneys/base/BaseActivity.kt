@@ -76,23 +76,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
-    internal fun handleUIState(state: UIState, onSuccessData : (Any?) -> Unit = {}) {
-        when(state) {
-            is UIState.onLoading -> {
-                showProgressDialog()
-            }
-            is UIState.onFinishLoading -> {
-                hideProgressDialog()
-            }
-            is UIState.onSuccess<*> -> {
-                onSuccessData(state.response)
-            }
-            is UIState.onFailure -> {
-                handleFailure(state.failure)
-            }
-        }
-    }
-
     fun showProgressDialog() {
         if (!progress.isShowing) progress.show()
     }

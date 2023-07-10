@@ -3,6 +3,7 @@ package com.ewide.test.disneys.base
 import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.viewbinding.ViewBinding
+import com.ewide.test.disneys.base.state.UIState
 import kotlin.reflect.KClass
 
 abstract class BaseActivityVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClass<VM>) : BaseActivity<VB>() {
@@ -15,7 +16,20 @@ abstract class BaseActivityVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     abstract fun observeViewModel(viewModel: VM)
 
-    internal fun handleLoading(showLoading: Boolean?) {
-        if (showLoading == true) showProgressDialog() else hideProgressDialog()
+    internal fun <T>handleUIState(state: UIState, onSuccessData : (T) -> Unit = {}) {
+        when(state) {
+            is UIState.onLoading -> {
+                showProgressDialog()
+            }
+            is UIState.onFinishLoading -> {
+                hideProgressDialog()
+            }
+            is UIState.onSuccess<*> -> {
+                onSuccessData(state.response as T)
+            }
+            is UIState.onFailure -> {
+                handleFailure(state.failure)
+            }
+        }
     }
 }

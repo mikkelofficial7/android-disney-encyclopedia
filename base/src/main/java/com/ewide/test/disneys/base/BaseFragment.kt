@@ -50,23 +50,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         requireActivity().onBackPressed()
     }
 
-    internal fun handleUIState(state: UIState, onSuccessData : (Any?) -> Unit = {}) {
-        when(state) {
-            is UIState.onLoading -> {
-                showProgress()
-            }
-            is UIState.onFinishLoading -> {
-                hideProgress()
-            }
-            is UIState.onSuccess<*> -> {
-                onSuccessData(state.response)
-            }
-            is UIState.onFailure -> {
-                handleFailure(state.failure)
-            }
-        }
-    }
-
     fun showProgress() {
         (requireActivity() as BaseActivity<*>).showProgressDialog()
     }
