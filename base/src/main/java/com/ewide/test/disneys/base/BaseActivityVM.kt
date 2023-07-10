@@ -15,7 +15,7 @@ abstract class BaseActivityVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     abstract fun observeViewModel(viewModel: VM)
 
-    protected fun handleLoading(showLoading: Boolean?) {
+    internal fun handleLoading(showLoading: Boolean?) {
         if (showLoading == true) showProgressDialog() else hideProgressDialog()
     }
 }

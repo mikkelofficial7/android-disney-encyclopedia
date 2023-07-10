@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.ewide.test.disneys.base.exception.Failure
+import com.ewide.test.disneys.base.state.UIState
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
@@ -47,6 +48,23 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     fun onBackPressed() {
         requireActivity().onBackPressed()
+    }
+
+    internal fun handleUIState(state: UIState, onSuccessData : (Any?) -> Unit = {}) {
+        when(state) {
+            is UIState.onLoading -> {
+                showProgress()
+            }
+            is UIState.onFinishLoading -> {
+                hideProgress()
+            }
+            is UIState.onSuccess<*> -> {
+                onSuccessData(state.response)
+            }
+            is UIState.onFailure -> {
+                handleFailure(state.failure)
+            }
+        }
     }
 
     fun showProgress() {

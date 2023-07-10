@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import com.ewide.test.disneys.base.exception.Failure
+import com.ewide.test.disneys.base.state.UIState
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     internal var viewBinding: VB? = null
@@ -71,6 +72,23 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 setDisplayShowTitleEnabled(false)
                 setDisplayHomeAsUpEnabled(enableBackButton())
                 setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+            }
+        }
+    }
+
+    internal fun handleUIState(state: UIState, onSuccessData : (Any?) -> Unit = {}) {
+        when(state) {
+            is UIState.onLoading -> {
+                showProgressDialog()
+            }
+            is UIState.onFinishLoading -> {
+                hideProgressDialog()
+            }
+            is UIState.onSuccess<*> -> {
+                onSuccessData(state.response)
+            }
+            is UIState.onFailure -> {
+                handleFailure(state.failure)
             }
         }
     }
