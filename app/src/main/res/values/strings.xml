@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Disneys Apps</string>
-    <string name="toolbar_name_1">List of Disney Character</string>
+    <string name="toolbar_name_1">List of Batman</string>
+    <string name="search_here">Search here…</string>
+    <string name="empty_list">No List is available</string>
+
 </resources>

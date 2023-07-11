@@ -33,7 +33,9 @@ class CustomItemViewHolder @JvmOverloads constructor(context: Context, attrs: At
        Glide.with(context).load(url).placeholder(R.drawable.ic_empty_image).into(binding.characterLogo)
     }
 
-    fun showButtonAddFavorite() {
-        binding.btnAddFavorite.isVisible = true
+    fun clickOnFavorite(invoke : () -> Unit) {
+        binding.btnAddFavorite.setOnClickListener {
+            invoke()
+        }
     }
 }

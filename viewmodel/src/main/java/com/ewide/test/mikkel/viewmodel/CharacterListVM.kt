@@ -19,10 +19,7 @@ class CharacterListVM(
     private val _characterListStateEvent = MutableLiveData<UIState>()
     fun getCharacterListStateEvent(): MutableLiveData<UIState> = _characterListStateEvent
 
-    private val _characterSearchStateEvent = MutableLiveData<UIState>()
-    fun getCharacterSearchStateEvent(): MutableLiveData<UIState> = _characterSearchStateEvent
-
-    fun getAllDisneyCharacter() {
+    fun getAllDisneyCharacter(title: String) {
         _characterListStateEvent.postValue(UIState.OnLoading)
 
         executeJob(getCharacterListStateEvent()) {
@@ -35,38 +32,12 @@ class CharacterListVM(
                 }
 
             }.launch(Dispatchers.IO) {
-                characterUseCase.getAllCharacter().collectLatest {
+                characterUseCase.getAllCharacter(title).collectLatest {
                     _characterListStateEvent.postValue(UIState.OnFinishLoading)
 
                     safeScopeFun().launch(Dispatchers.IO) {
                         delay(500)
                         _characterListStateEvent.postValue(UIState.OnSuccess(it))
-                    }
-                }
-
-            }
-        }
-    }
-
-    fun searchDisneyCharacter(name: String) {
-        _characterSearchStateEvent.postValue(UIState.OnLoading)
-
-        executeJob(getCharacterSearchStateEvent()) {
-            safeScopeFun {
-                _characterSearchStateEvent.postValue(UIState.OnFinishLoading)
-
-                safeScopeFun().launch(Dispatchers.IO) {
-                    delay(500)
-                    _characterSearchStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
-                }
-
-            }.launch(Dispatchers.IO) {
-                characterUseCase.searchCharacter(name).collectLatest {
-                    _characterSearchStateEvent.postValue(UIState.OnFinishLoading)
-
-                    safeScopeFun().launch(Dispatchers.IO) {
-                        delay(500)
-                        _characterSearchStateEvent.postValue(UIState.OnSuccess(it))
                     }
                 }
 

@@ -9,16 +9,11 @@ import retrofit2.http.Query
 interface Api {
     @GET("games")
     suspend fun getAllCharacter(
-        @Query("title") title: String = "batman"
+        @Query("title") title: String
     ): List<ListCharacterResponse>
 
     @GET("character/{id}")
     suspend fun getOneCharacter(
         @Path("id") id: Int,
-    ): OneCharacterResponse
-
-    @GET("character")
-    suspend fun searchCharacter(
-        @Query("name") name: String,
     ): OneCharacterResponse
 }

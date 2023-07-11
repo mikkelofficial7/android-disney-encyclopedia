@@ -8,15 +8,11 @@ import kotlinx.coroutines.flow.Flow
 class CharacterUseCase(
     private val repository: CharacterRepository
 ) {
-    suspend fun getAllCharacter() : Flow<List<ListCharacterResponse?>?> {
-        return repository.getAllCharacter()
+    suspend fun getAllCharacter(title: String) : Flow<List<ListCharacterResponse?>?> {
+        return repository.getAllCharacter(title)
     }
 
     suspend fun getOneCharacter(id: Int) : Flow<OneCharacterResponse?> {
         return repository.getOneCharacter(id)
-    }
-
-    suspend fun searchCharacter(name: String) : Flow<OneCharacterResponse?> {
-        return repository.searchCharacter(name)
     }
 }

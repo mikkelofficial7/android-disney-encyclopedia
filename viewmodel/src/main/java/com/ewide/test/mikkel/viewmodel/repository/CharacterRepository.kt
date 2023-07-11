@@ -5,7 +5,6 @@ import com.ewide.test.mikkel.model.OneCharacterResponse
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
-    suspend fun getAllCharacter(): Flow<List<ListCharacterResponse?>?>
+    suspend fun getAllCharacter(title: String): Flow<List<ListCharacterResponse?>?>
     suspend fun getOneCharacter(id: Int): Flow<OneCharacterResponse?>
-    suspend fun searchCharacter(name: String): Flow<OneCharacterResponse?>
 }

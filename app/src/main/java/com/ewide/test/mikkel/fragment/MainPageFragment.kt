@@ -1,10 +1,12 @@
 package com.ewide.test.mikkel.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.ewide.test.mikkel.adapter.ItemAdapter
 import com.ewide.test.mikkel.base.BaseFragmentVM
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.databinding.FragmentMainPageBinding
@@ -17,6 +19,8 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         ItemAdapter<ListCharacterResponse>()
     }
 
+    private var defaultSearch = ""
+
     override fun bindToolbar(): Toolbar? = viewBinding?.customToolbar?.getToolbar()
 
     override fun enableBackButton(): Boolean = true
@@ -26,7 +30,8 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
     }
 
     override fun onFirstLaunch(savedInstanceState: Bundle?, view: View) {
-        baseViewModel.getAllDisneyCharacter()
+        viewBinding?.searchBar?.setText(defaultSearch)
+        baseViewModel.getAllDisneyCharacter(viewBinding?.searchBar?.text.toString())
     }
 
     override fun onReExecute() {
@@ -36,6 +41,22 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         viewBinding?.rvCharacter?.apply {
             this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             this.adapter = rvAdapter
+        }
+
+        viewBinding?.searchBar?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                baseViewModel.getAllDisneyCharacter(p0.toString())
+            }
+        })
+
+        rvAdapter.onAddToFavorite = {
+
+        }
+
+        rvAdapter.onClick = {
+            moveToDetail(it)
         }
     }
 
@@ -47,5 +68,9 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         handleResponseState<List<ListCharacterResponse?>?>(state) {
             rvAdapter.setCharacterData(it)
         }
+    }
+
+    private fun moveToDetail(id: String) {
+
     }
 }
