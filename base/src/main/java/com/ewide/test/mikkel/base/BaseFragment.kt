@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.ewide.test.mikkel.base.exception.Failure
+import com.ewide.test.mikkel.base.state.FailureState
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     var viewBinding: VB? = null
@@ -73,8 +73,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         (requireActivity() as BaseActivity<*>).showToast(message)
     }
 
-    open fun handleFailure(failure: Failure?) {
-        (requireActivity() as BaseActivity<*>).handleFailure(failure)
+    open fun handleFailure(failureState: FailureState?) {
+        (requireActivity() as BaseActivity<*>).handleFailure(failureState)
     }
 
     override fun onDestroyView() {

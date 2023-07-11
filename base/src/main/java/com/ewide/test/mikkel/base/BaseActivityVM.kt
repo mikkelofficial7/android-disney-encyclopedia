@@ -7,7 +7,7 @@ import com.ewide.test.mikkel.base.state.UIState
 import kotlin.reflect.KClass
 
 abstract class BaseActivityVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClass<VM>) : BaseActivity<VB>() {
-    internal val baseViewModel: VM by viewModel(clazz = clazz)
+    protected val baseViewModel: VM by viewModel(clazz = clazz)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,17 +18,17 @@ abstract class BaseActivityVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     internal fun <T>handleResponseState(state: UIState, onSuccessData : (T) -> Unit = {}) {
         when(state) {
-            is UIState.onLoading -> {
+            is UIState.OnLoading -> {
                 showProgressDialog()
             }
-            is UIState.onFinishLoading -> {
+            is UIState.OnFinishLoading -> {
                 hideProgressDialog()
             }
-            is UIState.onSuccess<*> -> {
+            is UIState.OnSuccess<*> -> {
                 onSuccessData(state.response as T)
             }
-            is UIState.onFailure -> {
-                handleFailure(state.failure)
+            is UIState.OnFailure -> {
+                handleFailure(state.failureState)
             }
         }
     }

@@ -5,7 +5,6 @@ import com.ewide.test.mikkel.base.BaseViewModel
 import com.ewide.test.mikkel.base.helper.NetworkHandler
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.extension.getGeneralError
-import com.ewide.test.mikkel.model.OneCharacterResponse
 import com.ewide.test.mikkel.viewmodel.usecase.CharacterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -23,16 +22,17 @@ class CharacterListVM(
     fun getCharacterSearchStateEvent(): MutableLiveData<UIState> = _characterSearchStateEvent
 
     fun getAllDisneyCharacter(page: Int) {
-        _characterListStateEvent.postValue(UIState.onLoading)
+        _characterListStateEvent.postValue(UIState.OnLoading)
 
-        executeJob {
+        executeJob(getCharacterListStateEvent()) {
             safeScopeFun {
-                _characterListStateEvent.postValue(UIState.onFailure(it.getGeneralError()))
+                _characterListStateEvent.postValue(UIState.OnFinishLoading)
+                _characterListStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
 
             }.launch(Dispatchers.IO) {
                 characterUseCase.getAllCharacter(page).collectLatest {
-                    _characterListStateEvent.postValue(UIState.onFinishLoading)
-                    _characterListStateEvent.postValue(UIState.onSuccess(it))
+                    _characterListStateEvent.postValue(UIState.OnFinishLoading)
+                    _characterListStateEvent.postValue(UIState.OnSuccess(it))
                 }
 
             }
@@ -40,16 +40,17 @@ class CharacterListVM(
     }
 
     fun searchDisneyCharacter(name: String) {
-        _characterSearchStateEvent.postValue(UIState.onLoading)
+        _characterSearchStateEvent.postValue(UIState.OnLoading)
 
-        executeJob {
+        executeJob(getCharacterSearchStateEvent()) {
             safeScopeFun {
-                _characterSearchStateEvent.postValue(UIState.onFailure(it.getGeneralError()))
+                _characterSearchStateEvent.postValue(UIState.OnFinishLoading)
+                _characterSearchStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
 
             }.launch(Dispatchers.IO) {
                 characterUseCase.searchCharacter(name).collectLatest {
-                    _characterSearchStateEvent.postValue(UIState.onFinishLoading)
-                    _characterSearchStateEvent.postValue(UIState.onSuccess(it))
+                    _characterSearchStateEvent.postValue(UIState.OnFinishLoading)
+                    _characterSearchStateEvent.postValue(UIState.OnSuccess(it))
                 }
 
             }

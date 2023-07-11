@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
-import com.ewide.test.mikkel.base.exception.Failure
+import com.ewide.test.mikkel.base.state.FailureState
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     internal var viewBinding: VB? = null
@@ -87,12 +87,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    open fun handleFailure(failure: Failure?) {
-        when (failure) {
-            is Failure.NetworkConnection -> showToast(getString(R.string.error_network))
-            is Failure.ServerError -> showToast(getString(R.string.error_server))
-            is Failure.DataNotFound -> showToast(getString(R.string.error_not_found))
-            is Failure.Other -> showToast("${failure.code} - ${failure.message}")
+    open fun handleFailure(failureState: FailureState?) {
+        when (failureState) {
+            is FailureState.NetworkConnection -> showToast(getString(R.string.error_network))
+            is FailureState.ServerError -> showToast(getString(R.string.error_server))
+            is FailureState.DataNotFound -> showToast(getString(R.string.error_not_found))
+            is FailureState.Other -> showToast("${failureState.code} - ${failureState.message}")
             else -> showToast(getString(R.string.error_network))
         }
 

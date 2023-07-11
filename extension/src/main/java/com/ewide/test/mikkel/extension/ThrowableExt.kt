@@ -1,25 +1,25 @@
 package com.ewide.test.mikkel.extension
 
-import com.ewide.test.mikkel.base.exception.Failure
+import com.ewide.test.mikkel.base.state.FailureState
 import retrofit2.HttpException
 import java.io.IOException
 
-fun Throwable.getGeneralError(): Failure {
+fun Throwable.getGeneralError(): FailureState {
     return when (this) {
         is HttpException -> {
             try {
                 if (this.code() >= 500) {
-                    return Failure.ServerError
+                    return FailureState.ServerError
                 }
                 if (this.code() >= 404) {
-                    return Failure.DataNotFound
+                    return FailureState.DataNotFound
                 }
-                Failure.Other(this.response()?.code().toString(), this.response()?.message().orEmpty())
+                FailureState.Other(this.response()?.code().toString(), this.response()?.message().orEmpty())
             } catch (e: Exception) {
-                Failure.NetworkConnection
+                FailureState.NetworkConnection
             }
         }
-        is IOException -> Failure.NetworkConnection
-        else -> Failure.NetworkConnection
+        is IOException -> FailureState.NetworkConnection
+        else -> FailureState.NetworkConnection
     }
 }

@@ -20,6 +20,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
     }
 
     override fun onFirstLaunch(savedInstanceState: Bundle?, view: View) {
+        baseViewModel.getAllDisneyCharacter(1)
     }
 
     override fun onReExecute() {

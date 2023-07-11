@@ -19,16 +19,17 @@ class CharacterDetailVM(
     fun getCharacterDetailStateEvent(): MutableLiveData<UIState> = _characterDetailStateEvent
 
     fun getDetailDisneyCharacter(id: Int) {
-        _characterDetailStateEvent.postValue(UIState.onLoading)
+        _characterDetailStateEvent.postValue(UIState.OnLoading)
 
-        executeJob {
+        executeJob(getCharacterDetailStateEvent()) {
             safeScopeFun {
-                _characterDetailStateEvent.postValue(UIState.onFailure(it.getGeneralError()))
+                _characterDetailStateEvent.postValue(UIState.OnFinishLoading)
+                _characterDetailStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
 
             }.launch(Dispatchers.IO) {
                 characterUseCase.getOneCharacter(id).collectLatest {
-                    _characterDetailStateEvent.postValue(UIState.onFinishLoading)
-                    _characterDetailStateEvent.postValue(UIState.onSuccess(it))
+                    _characterDetailStateEvent.postValue(UIState.OnFinishLoading)
+                    _characterDetailStateEvent.postValue(UIState.OnSuccess(it))
                 }
 
             }
