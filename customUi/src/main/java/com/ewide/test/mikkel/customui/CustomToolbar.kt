@@ -38,4 +38,11 @@ class CustomToolbar @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setToolbarTitle(title: String) {
         binding.tvToolbarTitle.text = title
     }
+
+    fun clickOnFavoriteButton(invoke: () -> Unit) {
+        if(!binding.tvToolbarFavorite.isVisible) return
+        binding.tvToolbarFavorite.setOnClickListener {
+            invoke()
+        }
+    }
 }

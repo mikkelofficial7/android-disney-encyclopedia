@@ -11,11 +11,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.plus
 
 abstract class BaseViewModel(
-    private val networkHandler: NetworkHandler
+    private val networkHandler: NetworkHandler? = null
 ) : ViewModel() {
 
     protected fun executeJob(stateUILiveData: MutableLiveData<UIState>, invoke: () -> Unit) {
-        when (networkHandler.isNetworkAvailable()) {
+        when (networkHandler?.isNetworkAvailable()) {
             true -> invoke()
             else -> stateUILiveData.postValue(UIState.OnFailure(FailureState.NetworkConnection))
         }

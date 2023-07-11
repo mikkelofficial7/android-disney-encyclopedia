@@ -47,6 +47,10 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
             baseViewModel.getAllDisneyCharacter(it)
         }
 
+        viewBinding?.customToolbar?.clickOnFavoriteButton {
+            moveToFavoriteList()
+        }
+
         rvAdapter.onAddToFavorite = {
 
         }
@@ -74,5 +78,9 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         (requireActivity() as MainActivity).changeFragment(DetailPageFragment().apply {
             arguments = bundle
         })
+    }
+
+    private fun moveToFavoriteList() {
+        (requireActivity() as MainActivity).changeFragment(FavoritePageFragment())
     }
 }
