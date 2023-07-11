@@ -34,7 +34,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
     }
 
     private fun handleState(state: UIState?) {
-        handleResponseState<ListCharacterResponse>(state) {
+        handleResponseState<List<ListCharacterResponse?>?>(state) {
 
         }
     }

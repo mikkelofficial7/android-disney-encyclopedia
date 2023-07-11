@@ -7,7 +7,7 @@ import com.ewide.test.mikkel.network.Api
 import kotlinx.coroutines.flow.Flow
 
 class CharacterRepositoryImpl(private val api: Api) : CharacterRepository {
-    override suspend fun getAllCharacter(page: Int): Flow<ListCharacterResponse?> {
+    override suspend fun getAllCharacter(page: Int?): Flow<List<ListCharacterResponse?>?> {
         return flowOnValue(api.getAllCharacter(page))
     }
 

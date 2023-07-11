@@ -7,11 +7,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
-    @GET("character")
+    @GET("games")
     suspend fun getAllCharacter(
-        @Query("page") page: Int,
-        @Query("pageSize") pageSize: Int = 10,
-    ): ListCharacterResponse
+        @Query("page") page: Int? = null,
+        @Query("pageSize") pageSize: Int? = null,
+        @Query("title") title: String = "batman"
+    ): List<ListCharacterResponse>
 
     @GET("character/{id}")
     suspend fun getOneCharacter(

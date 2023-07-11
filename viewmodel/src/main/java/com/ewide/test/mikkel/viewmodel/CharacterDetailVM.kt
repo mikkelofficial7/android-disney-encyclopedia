@@ -7,6 +7,7 @@ import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.extension.getGeneralError
 import com.ewide.test.mikkel.viewmodel.usecase.CharacterUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,12 +25,20 @@ class CharacterDetailVM(
         executeJob(getCharacterDetailStateEvent()) {
             safeScopeFun {
                 _characterDetailStateEvent.postValue(UIState.OnFinishLoading)
-                _characterDetailStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
+
+                safeScopeFun().launch(Dispatchers.IO) {
+                    delay(500)
+                    _characterDetailStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
+                }
 
             }.launch(Dispatchers.IO) {
                 characterUseCase.getOneCharacter(id).collectLatest {
                     _characterDetailStateEvent.postValue(UIState.OnFinishLoading)
-                    _characterDetailStateEvent.postValue(UIState.OnSuccess(it))
+
+                    safeScopeFun().launch(Dispatchers.IO) {
+                        delay(500)
+                        _characterDetailStateEvent.postValue(UIState.OnSuccess(it))
+                    }
                 }
 
             }
