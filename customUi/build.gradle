@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -49,6 +50,11 @@ dependencies {
     implementation androidX.lifecycleExtensions
     implementation androidX.lifecycleVmExt
     implementation androidX.material
+
+    // image
+    implementation libraries.glide
+    implementation libraries.glideOkhttp
+    kapt libraries.glideCompiler
 
     //ssp
     implementation libraries.ssp

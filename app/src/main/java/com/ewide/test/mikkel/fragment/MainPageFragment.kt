@@ -45,7 +45,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
 
     private fun handleState(state: UIState?) {
         handleResponseState<List<ListCharacterResponse?>?>(state) {
-
+            rvAdapter.setCharacterData(it)
         }
     }
 }
