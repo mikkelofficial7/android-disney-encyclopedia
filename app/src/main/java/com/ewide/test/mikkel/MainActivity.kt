@@ -23,9 +23,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initUiListener() {
     }
 
-    internal fun changeFragment(fragment: Fragment) {
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount > 0){
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
+            .addToBackStack(fragment.tag)
             .replace(R.id.frameLayout, fragment)
             .commit()
     }

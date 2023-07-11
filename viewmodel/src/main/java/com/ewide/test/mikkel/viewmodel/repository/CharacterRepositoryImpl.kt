@@ -11,7 +11,7 @@ class CharacterRepositoryImpl(private val api: Api) : CharacterRepository {
         return flowOnValue(api.getAllCharacter(title))
     }
 
-    override suspend fun getOneCharacter(id: Int): Flow<OneCharacterResponse?> {
+    override suspend fun getOneCharacter(id: String): Flow<OneCharacterResponse?> {
         return flowOnValue(api.getOneCharacter(id))
     }
 }

@@ -12,7 +12,7 @@ class CharacterUseCase(
         return repository.getAllCharacter(title)
     }
 
-    suspend fun getOneCharacter(id: Int) : Flow<OneCharacterResponse?> {
+    suspend fun getOneCharacter(id: String) : Flow<OneCharacterResponse?> {
         return repository.getOneCharacter(id)
     }
 }

@@ -6,6 +6,8 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.11145833333333334" />
         <entry key="../../.gradle/caches/transforms-3/9d6778b007a14e0c6659deb3da7018f2/transformed/material-1.6.1/res/drawable/ic_m3_chip_check.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/fragment_detail_page.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/fragment_favorite_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_main_page.xml" value="0.31569976806640626" />
         <entry key="app/src/main/res/layout/item_character.xml" value="0.23697916666666666" />
         <entry key="base/src/main/res/drawable/is_search.xml" value="0.1435" />

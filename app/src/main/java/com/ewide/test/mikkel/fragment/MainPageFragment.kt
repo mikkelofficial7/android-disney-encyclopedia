@@ -1,16 +1,16 @@
 package com.ewide.test.mikkel.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ewide.test.mikkel.MainActivity
 import com.ewide.test.mikkel.adapter.ItemAdapter
 import com.ewide.test.mikkel.base.BaseFragmentVM
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.databinding.FragmentMainPageBinding
 import com.ewide.test.mikkel.extension.observe
+import com.ewide.test.mikkel.extension.startTyping
 import com.ewide.test.mikkel.model.ListCharacterResponse
 import com.ewide.test.mikkel.viewmodel.CharacterListVM
 
@@ -19,7 +19,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         ItemAdapter<ListCharacterResponse>()
     }
 
-    private var defaultSearch = ""
+    private var defaultSearch = "batman"
 
     override fun bindToolbar(): Toolbar? = viewBinding?.customToolbar?.getToolbar()
 
@@ -43,13 +43,9 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
             this.adapter = rvAdapter
         }
 
-        viewBinding?.searchBar?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {
-                baseViewModel.getAllDisneyCharacter(p0.toString())
-            }
-        })
+        viewBinding?.searchBar?.startTyping {
+            baseViewModel.getAllDisneyCharacter(it)
+        }
 
         rvAdapter.onAddToFavorite = {
 
@@ -71,6 +67,12 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
     }
 
     private fun moveToDetail(id: String) {
+        val bundle = Bundle().apply {
+            putString("GAME_ID", id)
+        }
 
+        (requireActivity() as MainActivity).changeFragment(DetailPageFragment().apply {
+            arguments = bundle
+        })
     }
 }

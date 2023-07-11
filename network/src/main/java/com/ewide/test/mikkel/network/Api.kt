@@ -12,8 +12,8 @@ interface Api {
         @Query("title") title: String
     ): List<ListCharacterResponse>
 
-    @GET("character/{id}")
+    @GET("games")
     suspend fun getOneCharacter(
-        @Path("id") id: Int,
+        @Query("id") id: String,
     ): OneCharacterResponse
 }

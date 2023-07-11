@@ -19,7 +19,7 @@ class CharacterDetailVM(
     private val _characterDetailStateEvent = MutableLiveData<UIState>()
     fun getCharacterDetailStateEvent(): MutableLiveData<UIState> = _characterDetailStateEvent
 
-    fun getDetailDisneyCharacter(id: Int) {
+    fun getDetailDisneyCharacter(id: String) {
         _characterDetailStateEvent.postValue(UIState.OnLoading)
 
         executeJob(getCharacterDetailStateEvent()) {
