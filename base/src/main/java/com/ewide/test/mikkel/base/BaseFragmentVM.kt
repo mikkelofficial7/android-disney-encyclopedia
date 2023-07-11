@@ -3,6 +3,7 @@ package com.ewide.test.mikkel.base
 import android.os.Bundle
 import android.view.View
 import androidx.viewbinding.ViewBinding
+import com.ewide.test.mikkel.base.exception.Failure
 import com.ewide.test.mikkel.base.state.UIState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.reflect.KClass
@@ -18,7 +19,7 @@ abstract class BaseFragmentVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     abstract fun observeViewModel(viewModel: VM)
 
-    internal fun <T>handleState(state: UIState, onSuccessData : (T) -> Unit = {}) {
+    fun <T>handleResponseState(state: UIState?, onSuccessData : (T) -> Unit = {}) {
         when(state) {
             is UIState.onLoading -> {
                 showProgress()
@@ -31,6 +32,9 @@ abstract class BaseFragmentVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
             }
             is UIState.onFailure -> {
                 handleFailure(state.failure)
+            }
+            else -> {
+                handleFailure(Failure.DataNotFound)
             }
         }
     }
