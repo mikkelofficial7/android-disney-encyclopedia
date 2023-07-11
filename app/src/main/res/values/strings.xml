@@ -2,8 +2,12 @@
     <string name="app_name">Disneys Apps</string>
     <string name="toolbar_name_1">List of game</string>
     <string name="toolbar_name_2">Detail game</string>
+    <string name="toolbar_name_3">Favorite game</string>
     <string name="search_here">Search here…</string>
     <string name="empty_list">No List is available</string>
+    <string name="sort_by">Sorting By:</string>
+    <string name="sort_asc">ASC</string>
+    <string name="sort_desc">DESC</string>
     <string name="cheapest_price">The Cheapest Price Ever:\n%1$s USD</string>
     <string name="other_deals">Other deals is on %1$s USD</string>
 </resources>

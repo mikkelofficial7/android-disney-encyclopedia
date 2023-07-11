@@ -32,7 +32,7 @@ android {
 
 dependencies {
     implementation androidX.roomRuntime
-    annotationProcessor androidX.roomCompiler
+    kapt androidX.roomCompiler
     implementation androidX.roomKtx
 
     implementation testLibraries.testMonitor

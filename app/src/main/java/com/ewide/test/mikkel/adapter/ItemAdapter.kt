@@ -26,12 +26,7 @@ class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun setCharacterData(data: List<T?>?) {
         mList?.clear()
         mList?.addAll(data ?: listOf())
-
-        if(mList.isNullOrEmpty()) {
-            notifyDataSetChanged()
-        } else {
-            notifyItemRangeChanged(0, mList?.size ?: 0)
-        }
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

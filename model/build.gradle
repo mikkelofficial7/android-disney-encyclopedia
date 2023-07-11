@@ -42,6 +42,6 @@ dependencies {
     implementation testLibraries.junit
 
     implementation androidX.roomRuntime
-    annotationProcessor androidX.roomCompiler
+    kapt androidX.roomCompiler
     implementation androidX.roomKtx
 }

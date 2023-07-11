@@ -23,6 +23,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         onFirstLaunch(savedInstanceState, view)
         setupToolbar()
         initUiListener()

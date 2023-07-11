@@ -11,7 +11,7 @@ import com.ewide.test.mikkel.model.local.ListCharacter
 @Dao
 interface DataDao : BaseDao<ListCharacter> {
     @RawQuery
-    fun getAllFavoriteCharacter(query: SupportSQLiteQuery?): List<ListCharacter?>?
+    fun getAllFavoriteCharacter(query: SupportSQLiteQuery): List<ListCharacter?>?
 }
 
 fun DataDao.queryAllFavoriteCharacter(isAscending: Boolean = false): List<ListCharacter?>? {

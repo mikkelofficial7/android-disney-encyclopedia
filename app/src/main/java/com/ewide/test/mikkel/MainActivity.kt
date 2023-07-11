@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(fragment.tag)
-            .replace(R.id.frameLayout, fragment)
+            .add(R.id.frameLayout, fragment)
             .commit()
     }
 }
