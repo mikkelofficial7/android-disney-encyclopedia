@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ewide.test.mikkel.databinding.ItemCharacterBinding
 import com.ewide.test.mikkel.model.ListCharacterResponse
+import com.ewide.test.mikkel.model.local.ListCharacter
 
 class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var mList: ArrayList<T?>? = arrayListOf()
@@ -44,19 +45,39 @@ class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun <S>bind(video: S) {
-            val itemVideo = video as ListCharacterResponse
+            when(video) {
+                is ListCharacterResponse -> {
+                    val itemVideo = video as ListCharacterResponse
 
-            itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
-            itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
-            itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
+                    itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
+                    itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
+                    itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
 
-            itemBinding.root.setOnClickListener {
-                onClick(itemVideo.gameID.orEmpty())
+                    itemBinding.root.setOnClickListener {
+                        onClick(itemVideo.gameID.orEmpty())
+                    }
+
+                    itemBinding.customViewHolder.clickOnFavorite {
+                        onAddToFavorite(video as T)
+                    }
+                }
+                is ListCharacter -> {
+                    val itemVideo = video as ListCharacterResponse
+
+                    itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
+                    itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
+                    itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
+
+                    itemBinding.root.setOnClickListener {
+                        onClick(itemVideo.gameID.orEmpty())
+                    }
+
+                    itemBinding.customViewHolder.clickOnFavorite {
+                        onAddToFavorite(video as T)
+                    }
+                }
             }
 
-            itemBinding.customViewHolder.clickOnFavorite {
-                onAddToFavorite(video as T)
-            }
         }
     }
 }
