@@ -13,9 +13,9 @@ import com.ewide.test.mikkel.databinding.FragmentFavoritePageBinding
 import com.ewide.test.mikkel.extension.observe
 import com.ewide.test.mikkel.model.local.ListCharacter
 import com.ewide.test.mikkel.route.Routing
-import com.ewide.test.mikkel.viewmodel.CharacterFavoriteVM
+import com.ewide.test.mikkel.viewmodel.GamesFavoriteVM
 
-class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, CharacterFavoriteVM>(CharacterFavoriteVM::class) {
+class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, GamesFavoriteVM>(GamesFavoriteVM::class) {
     private val rvAdapter by lazy {
         ItemAdapter<ListCharacter>()
     }
@@ -54,7 +54,7 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, Charact
         }
 
         rvAdapter.onAddToFavorite = {
-
+            baseViewModel.removeFromFavorite(it)
         }
 
         rvAdapter.onClick = {
@@ -62,19 +62,27 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, Charact
         }
     }
 
-    override fun observeViewModel(viewModel: CharacterFavoriteVM) {
+    override fun observeViewModel(viewModel: GamesFavoriteVM) {
         observe(viewModel.getCharacterFavoriteStateEvent(), ::handleState)
+        observe(viewModel.getCharacterFavoriteListStateEvent(), ::handleStateList)
     }
 
-    private fun handleState(state: UIState?) {
+    private fun handleStateList(state: UIState?) {
         handleResponseState<List<ListCharacter?>?>(state) {
             rvAdapter.setCharacterData(it)
         }
     }
 
+    private fun handleState(state: UIState?) {
+        handleResponseState<Boolean>(state) {
+            showToastAddRemoveFavorite(it)
+            handleDefaultSelectSort()
+        }
+    }
+
     private fun handleDefaultSelectSort() {
         val isAscendingSort = baseViewModel.getSortingData()
-        baseViewModel.getAllListOrderBy(isAscendingSort)
+        baseViewModel.getAllListLocalOrderBy(isAscendingSort)
 
         when(isAscendingSort) {
             true -> viewBinding?.rbAsc?.isChecked = true

@@ -10,9 +10,9 @@ import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.databinding.FragmentDetailPageBinding
 import com.ewide.test.mikkel.extension.observe
 import com.ewide.test.mikkel.model.OneCharacterResponse
-import com.ewide.test.mikkel.viewmodel.CharacterDetailVM
+import com.ewide.test.mikkel.viewmodel.GamesDetailVM
 
-class DetailPageFragment : BaseFragmentVM<FragmentDetailPageBinding, CharacterDetailVM>(CharacterDetailVM::class) {
+class DetailPageFragment : BaseFragmentVM<FragmentDetailPageBinding, GamesDetailVM>(GamesDetailVM::class) {
     private val gameId by lazy {
         arguments?.getString("GAME_ID", "").orEmpty()
     }
@@ -33,7 +33,7 @@ class DetailPageFragment : BaseFragmentVM<FragmentDetailPageBinding, CharacterDe
 
     override fun initUiListener() {}
 
-    override fun observeViewModel(viewModel: CharacterDetailVM) {
+    override fun observeViewModel(viewModel: GamesDetailVM) {
         observe(viewModel.getCharacterDetailStateEvent(), ::handleState)
     }
 

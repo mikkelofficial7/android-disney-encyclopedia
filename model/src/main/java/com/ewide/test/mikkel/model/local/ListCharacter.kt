@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "table_item_character")
 data class ListCharacter(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int = 0,
     var gameID: String? = null,
     var steamAppID: String? = null,
     var cheapest: String? = null,
@@ -14,5 +14,4 @@ data class ListCharacter(
     var external: String? = null,
     var internalName: String? = null,
     var thumb: String? = null,
-    var isFavorite: Boolean? = false
 )

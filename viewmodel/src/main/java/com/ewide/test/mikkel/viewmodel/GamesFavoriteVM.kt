@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.ewide.test.mikkel.base.BaseViewModel
 import com.ewide.test.mikkel.base.sharedpreference.BaseSharedPreferences
 import com.ewide.test.mikkel.base.state.UIState
+import com.ewide.test.mikkel.model.local.ListCharacter
 import com.ewide.test.mikkel.room.DBConfig
 import com.ewide.test.mikkel.room.queryAllFavoriteCharacter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CharacterFavoriteVM(
+class GamesFavoriteVM(
     private val roomConfig: DBConfig,
     private val sharedPreferences: SharedPreferences
 ) : BaseViewModel() {
@@ -18,13 +19,17 @@ class CharacterFavoriteVM(
     private val sharedPref by lazy {
         BaseSharedPreferences(sharedPreferences)
     }
+
+    private val _characterFavoriteStateListEvent = MutableLiveData<UIState>()
+    fun getCharacterFavoriteListStateEvent(): MutableLiveData<UIState> = _characterFavoriteStateListEvent
+
     private val _characterFavoriteStateEvent = MutableLiveData<UIState>()
     fun getCharacterFavoriteStateEvent(): MutableLiveData<UIState> = _characterFavoriteStateEvent
 
-    fun getAllListOrderBy(isAscending: Boolean) {
+    fun getAllListLocalOrderBy(isAscending: Boolean) {
         safeScopeFun().launch(Dispatchers.IO) {
             val data = roomConfig.dataDao().queryAllFavoriteCharacter(isAscending)
-            _characterFavoriteStateEvent.postValue(UIState.OnSuccess(data))
+            _characterFavoriteStateListEvent.postValue(UIState.OnSuccess(data))
         }
     }
 
@@ -34,5 +39,12 @@ class CharacterFavoriteVM(
 
     fun getSortingData(): Boolean {
         return sharedPref.getData("SORTING", false)
+    }
+
+    fun removeFromFavorite(dataChar: ListCharacter) {
+        safeScopeFun().launch(Dispatchers.IO) {
+            roomConfig.dataDao().deleteFavoriteItemById(dataChar.gameID.orEmpty())
+            _characterFavoriteStateEvent.postValue(UIState.OnSuccess(false))
+        }
     }
 }

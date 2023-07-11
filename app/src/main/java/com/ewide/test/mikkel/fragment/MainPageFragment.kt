@@ -12,14 +12,14 @@ import com.ewide.test.mikkel.databinding.FragmentMainPageBinding
 import com.ewide.test.mikkel.extension.observe
 import com.ewide.test.mikkel.extension.startTyping
 import com.ewide.test.mikkel.model.ListCharacterResponse
-import com.ewide.test.mikkel.viewmodel.CharacterListVM
+import com.ewide.test.mikkel.model.local.ListCharacter
+import com.ewide.test.mikkel.route.Routing
+import com.ewide.test.mikkel.viewmodel.GamesListVM
 
-class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM>(CharacterListVM::class) {
+class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, GamesListVM>(GamesListVM::class) {
     private val rvAdapter by lazy {
         ItemAdapter<ListCharacterResponse>()
     }
-
-    private var defaultSearch = "batman"
 
     override fun bindToolbar(): Toolbar? = viewBinding?.customToolbar?.getToolbar()
 
@@ -30,12 +30,10 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
     }
 
     override fun onFirstLaunch(savedInstanceState: Bundle?, view: View) {
-        viewBinding?.searchBar?.setText(defaultSearch)
-        baseViewModel.getAllDisneyCharacter(viewBinding?.searchBar?.text.toString())
+        baseViewModel.getAllListLocalOrderBy()
     }
 
-    override fun onReExecute() {
-    }
+    override fun onReExecute() {}
 
     override fun initUiListener() {
         viewBinding?.rvCharacter?.apply {
@@ -44,7 +42,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         }
 
         viewBinding?.searchBar?.startTyping {
-            baseViewModel.getAllDisneyCharacter(it)
+            baseViewModel.getAllCharacterFromAPI(it)
         }
 
         viewBinding?.customToolbar?.clickOnFavoriteButton {
@@ -52,32 +50,47 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM
         }
 
         rvAdapter.onAddToFavorite = {
-
+            if(it.isFavorite) {
+                baseViewModel.removeFromFavorite(it.setItemToFavoriteCharacterLocal())
+            } else {
+                baseViewModel.addToFavorite(it.setItemToFavoriteCharacterLocal())
+            }
         }
 
         rvAdapter.onClick = {
-            moveToDetail(it)
+            Routing.moveToDetailPage(requireActivity() as MainActivity, it)
         }
     }
 
-    override fun observeViewModel(viewModel: CharacterListVM) {
+    override fun observeViewModel(viewModel: GamesListVM) {
         observe(viewModel.getCharacterListStateEvent(), ::handleState)
+        observe(viewModel.getCharacterFavoriteStateEvent(), ::handleStateFavorite)
+        observe(viewModel.getCharacterFavoriteListStateEvent(), ::handleStateFavoriteList)
     }
 
     private fun handleState(state: UIState?) {
         handleResponseState<List<ListCharacterResponse?>?>(state) {
+            it?.map { item ->
+                item?.apply {
+                    isFavorite = baseViewModel.getListItemFavorite()?.find { it?.gameID == item.gameID } != null
+                }
+            }
             rvAdapter.setCharacterData(it)
         }
     }
 
-    private fun moveToDetail(id: String) {
-        val bundle = Bundle().apply {
-            putString("GAME_ID", id)
+    private fun handleStateFavorite(state: UIState?) {
+        handleResponseState<Boolean>(state) {
+            showToastAddRemoveFavorite(it)
+            baseViewModel.getAllListLocalOrderBy()
         }
+    }
 
-        (requireActivity() as MainActivity).changeFragment(DetailPageFragment().apply {
-            arguments = bundle
-        })
+    private fun handleStateFavoriteList(state: UIState?) {
+        handleResponseState<List<ListCharacter?>?>(state) {
+            baseViewModel.setListItemFavorite(it)
+            baseViewModel.getAllCharacterFromAPI(viewBinding?.searchBar?.text.toString())
+        }
     }
 
     private fun moveToFavoriteList() {

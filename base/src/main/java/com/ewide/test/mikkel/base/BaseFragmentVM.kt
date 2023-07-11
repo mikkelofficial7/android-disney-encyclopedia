@@ -18,6 +18,14 @@ abstract class BaseFragmentVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     abstract fun observeViewModel(viewModel: VM)
 
+    fun showToastAddRemoveFavorite(isSuccess: Boolean) {
+        if(isSuccess) {
+            showToast(getString(R.string.success_add_favorite))
+        } else {
+            showToast(getString(R.string.success_add_favorite))
+        }
+    }
+
     fun <T>handleResponseState(state: UIState?, onSuccessData : (T) -> Unit = {}) {
         when(state) {
             is UIState.OnLoading -> {

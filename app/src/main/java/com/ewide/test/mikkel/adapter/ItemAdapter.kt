@@ -52,6 +52,7 @@ class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
                     itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
                     itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
+                    itemBinding.customViewHolder.setFavoriteHeartIcon(itemVideo.isFavorite)
 
                     itemBinding.root.setOnClickListener {
                         onClick(itemVideo.gameID.orEmpty())
@@ -62,11 +63,12 @@ class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     }
                 }
                 is ListCharacter -> {
-                    val itemVideo = video as ListCharacterResponse
+                    val itemVideo = video as ListCharacter
 
                     itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
                     itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
                     itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
+                    itemBinding.customViewHolder.setFavoriteHeartIcon(true)
 
                     itemBinding.root.setOnClickListener {
                         onClick(itemVideo.gameID.orEmpty())

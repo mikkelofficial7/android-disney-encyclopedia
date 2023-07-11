@@ -11,7 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class CharacterDetailVM(
+class GamesDetailVM(
     networkHandler: NetworkHandler,
     private val characterUseCase: CharacterUseCase
 ) : BaseViewModel(networkHandler) {

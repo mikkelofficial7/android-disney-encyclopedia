@@ -29,6 +29,11 @@ class CustomItemViewHolder @JvmOverloads constructor(context: Context, attrs: At
        Glide.with(context).load(url).placeholder(R.drawable.ic_empty_image).into(binding.characterLogo)
     }
 
+    fun setFavoriteHeartIcon(isFavorite: Boolean = true) {
+        val icon = if(isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_border
+        binding.btnAddFavorite.setImageResource(icon)
+    }
+
     fun clickOnFavorite(invoke : () -> Unit) {
         binding.btnAddFavorite.setOnClickListener {
             invoke()

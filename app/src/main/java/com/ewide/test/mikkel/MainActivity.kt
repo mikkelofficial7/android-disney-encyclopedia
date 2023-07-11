@@ -3,6 +3,7 @@ package com.ewide.test.mikkel
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.ewide.test.mikkel.base.BaseActivity
 import com.ewide.test.mikkel.databinding.ActivityMainBinding
 import com.ewide.test.mikkel.fragment.MainPageFragment
@@ -24,18 +25,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStackImmediate()
-        } else {
-            super.onBackPressed()
-        }
+        supportFragmentManager.popBackStackImmediate()
+
+        if (supportFragmentManager.backStackEntryCount > 0) return
+        super.onBackPressed()
     }
 
     fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(fragment.tag)
-            .add(R.id.frameLayout, fragment)
+            .replace(R.id.frameLayout, fragment)
             .commit()
     }
 }
