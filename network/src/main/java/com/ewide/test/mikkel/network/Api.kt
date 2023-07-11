@@ -9,8 +9,6 @@ import retrofit2.http.Query
 interface Api {
     @GET("games")
     suspend fun getAllCharacter(
-        @Query("page") page: Int? = null,
-        @Query("pageSize") pageSize: Int? = null,
         @Query("title") title: String = "batman"
     ): List<ListCharacterResponse>
 

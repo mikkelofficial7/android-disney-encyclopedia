@@ -22,7 +22,7 @@ class CharacterListVM(
     private val _characterSearchStateEvent = MutableLiveData<UIState>()
     fun getCharacterSearchStateEvent(): MutableLiveData<UIState> = _characterSearchStateEvent
 
-    fun getAllDisneyCharacter(page: Int? = null) {
+    fun getAllDisneyCharacter() {
         _characterListStateEvent.postValue(UIState.OnLoading)
 
         executeJob(getCharacterListStateEvent()) {
@@ -35,7 +35,7 @@ class CharacterListVM(
                 }
 
             }.launch(Dispatchers.IO) {
-                characterUseCase.getAllCharacter(page).collectLatest {
+                characterUseCase.getAllCharacter().collectLatest {
                     _characterListStateEvent.postValue(UIState.OnFinishLoading)
 
                     safeScopeFun().launch(Dispatchers.IO) {
