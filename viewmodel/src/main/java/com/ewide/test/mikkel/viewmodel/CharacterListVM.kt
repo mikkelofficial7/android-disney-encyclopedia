@@ -7,6 +7,7 @@ import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.extension.getGeneralError
 import com.ewide.test.mikkel.viewmodel.usecase.CharacterUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,12 +28,20 @@ class CharacterListVM(
         executeJob(getCharacterListStateEvent()) {
             safeScopeFun {
                 _characterListStateEvent.postValue(UIState.OnFinishLoading)
-                _characterListStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
+
+                safeScopeFun().launch(Dispatchers.IO) {
+                    delay(500)
+                    _characterListStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
+                }
 
             }.launch(Dispatchers.IO) {
                 characterUseCase.getAllCharacter(page).collectLatest {
                     _characterListStateEvent.postValue(UIState.OnFinishLoading)
-                    _characterListStateEvent.postValue(UIState.OnSuccess(it))
+
+                    safeScopeFun().launch(Dispatchers.IO) {
+                        delay(500)
+                        _characterListStateEvent.postValue(UIState.OnSuccess(it))
+                    }
                 }
 
             }
@@ -45,12 +54,20 @@ class CharacterListVM(
         executeJob(getCharacterSearchStateEvent()) {
             safeScopeFun {
                 _characterSearchStateEvent.postValue(UIState.OnFinishLoading)
-                _characterSearchStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
+
+                safeScopeFun().launch(Dispatchers.IO) {
+                    delay(500)
+                    _characterSearchStateEvent.postValue(UIState.OnFailure(it.getGeneralError()))
+                }
 
             }.launch(Dispatchers.IO) {
                 characterUseCase.searchCharacter(name).collectLatest {
                     _characterSearchStateEvent.postValue(UIState.OnFinishLoading)
-                    _characterSearchStateEvent.postValue(UIState.OnSuccess(it))
+
+                    safeScopeFun().launch(Dispatchers.IO) {
+                        delay(500)
+                        _characterSearchStateEvent.postValue(UIState.OnSuccess(it))
+                    }
                 }
 
             }

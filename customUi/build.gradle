@@ -1,20 +1,17 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.ewide.test.mikkel"
         minSdk 24
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -41,6 +38,7 @@ dependencies {
     implementation ktxDefault.coroutinesCore
     implementation ktxDefault.coroutinesAndroid
 
+    // AndroidX
     implementation androidX.appCompatX
     implementation androidX.coreKtx
 
@@ -48,28 +46,15 @@ dependencies {
     implementation androidX.cardX
     implementation androidX.fragmentKtx
     implementation androidX.constraintLayout
+    implementation androidX.lifecycleExtensions
+    implementation androidX.lifecycleVmExt
     implementation androidX.material
 
-    // image
-    implementation libraries.glide
-    implementation libraries.glideOkhttp
-    kapt libraries.glideCompiler
-
-    // DI
-    implementation libraries.koin
-    implementation libraries.koinViewmodel
-    implementation libraries.koinScope
-    implementation libraries.javaxInject
-
-    // ui
-    implementation libraries.sdp
+    //ssp
     implementation libraries.ssp
+    implementation libraries.sdp
 
-    // Unit Test
     implementation testLibraries.testMonitor
     implementation testLibraries.junitExt
     implementation testLibraries.junit
-
-    api project(path: ':di')
-    implementation project(path: ':customUi')
 }

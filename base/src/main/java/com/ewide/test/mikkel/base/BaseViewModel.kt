@@ -21,7 +21,7 @@ abstract class BaseViewModel(
         }
     }
 
-    protected fun safeScopeFun(error :(Throwable) -> Unit) : CoroutineScope{
+    protected fun safeScopeFun(error :(Throwable) -> Unit = {}) : CoroutineScope{
         return viewModelScope + CoroutineExceptionHandler { coroutineContext, throwable ->
             error.invoke(throwable)
         }

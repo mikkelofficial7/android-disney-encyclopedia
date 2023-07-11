@@ -11,7 +11,7 @@ import com.ewide.test.mikkel.model.ListCharacterResponse
 import com.ewide.test.mikkel.viewmodel.CharacterListVM
 
 class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, CharacterListVM>(CharacterListVM::class) {
-    override fun bindToolbar(): Toolbar? = null
+    override fun bindToolbar(): Toolbar? = viewBinding?.customToolbar?.getToolbar()
 
     override fun enableBackButton(): Boolean = true
 
