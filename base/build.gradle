@@ -60,4 +60,8 @@ dependencies {
     //ssp
     implementation libraries.ssp
     implementation libraries.sdp
+
+    implementation testLibraries.testMonitor
+    implementation testLibraries.junitExt
+    implementation testLibraries.junit
 }

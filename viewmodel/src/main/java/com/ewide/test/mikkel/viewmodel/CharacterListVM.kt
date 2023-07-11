@@ -5,12 +5,13 @@ import com.ewide.test.mikkel.base.BaseViewModel
 import com.ewide.test.mikkel.base.helper.NetworkHandler
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.extension.getGeneralError
+import com.ewide.test.mikkel.model.OneCharacterResponse
 import com.ewide.test.mikkel.viewmodel.usecase.CharacterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class CharacterListFragmentVM(
+class CharacterListVM(
     networkHandler: NetworkHandler,
     private val characterUseCase: CharacterUseCase
 ) : BaseViewModel(networkHandler) {

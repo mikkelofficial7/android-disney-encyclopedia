@@ -66,12 +66,9 @@ dependencies {
     implementation libraries.ssp
 
     // Unit Test
-    testImplementation testLibraries.junit
-    testImplementation testLibraries.mockito
-
-    // Android Testing Support Library's runner and rules
-    androidTestImplementation testLibraries.junitRunner
-    androidTestImplementation testLibraries.espressoCore
+    implementation testLibraries.testMonitor
+    implementation testLibraries.junitExt
+    implementation testLibraries.junit
 
     api project(path: ':di')
 }

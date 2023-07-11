@@ -85,11 +85,8 @@ ext {
     ]
 
     testLibraries = [
-            junit         : "junit:junit:$jUnitVersion",
-            junitRunner   : "com.android.support.test:runner:$jUnitRunnerVersion",
-            espressoCore  : "com.android.support.test.espresso:espresso-core:$espressoCoreVersion",
-            mockito       : "org.mockito:mockito-core:$mockitoVersion",
-            mockitoInline : "org.mockito:mockito-inline:$mockitoVersion",
-            coroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutineVersion",
+            testMonitor : 'androidx.test:monitor:1.6.1',
+            junitExt    : 'androidx.test.ext:junit-ktx:1.1.5',
+            junit       : 'junit:junit:4.12'
     ]
 }

@@ -34,6 +34,11 @@ dependencies {
     implementation androidX.lifecycleExtensions
     implementation androidX.lifecycleVmExt
 
+    implementation testLibraries.testMonitor
+    implementation testLibraries.junitExt
+    implementation testLibraries.junit
+
     api project(path: ':network')
     api project(path: ':extension')
+
 }

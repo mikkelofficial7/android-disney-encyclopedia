@@ -35,4 +35,8 @@ dependencies {
     implementation ktxDefault.coroutinesAndroid
 
     implementation libraries.retrofitGson
+
+    implementation testLibraries.testMonitor
+    implementation testLibraries.junitExt
+    implementation testLibraries.junit
 }

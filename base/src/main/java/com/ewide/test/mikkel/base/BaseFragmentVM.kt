@@ -18,7 +18,7 @@ abstract class BaseFragmentVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     abstract fun observeViewModel(viewModel: VM)
 
-    internal fun <T>handleUIState(state: UIState, onSuccessData : (T) -> Unit = {}) {
+    internal fun <T>handleState(state: UIState, onSuccessData : (T) -> Unit = {}) {
         when(state) {
             is UIState.onLoading -> {
                 showProgress()

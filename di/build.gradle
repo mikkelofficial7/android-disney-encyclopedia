@@ -43,6 +43,10 @@ dependencies {
     implementation libraries.coroutineAdapter
     implementation libraries.retrofitMoshi
 
+    implementation testLibraries.testMonitor
+    implementation testLibraries.junitExt
+    implementation testLibraries.junit
+
     api project(path: ':network')
     api project(path: ':base')
     api project(path: ':viewmodel')
