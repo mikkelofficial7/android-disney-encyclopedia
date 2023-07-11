@@ -22,7 +22,7 @@ abstract class BaseFragmentVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
         if(isSuccess) {
             showToast(getString(R.string.success_add_favorite))
         } else {
-            showToast(getString(R.string.success_add_favorite))
+            showToast(getString(R.string.success_remove_favorite))
         }
     }
 
