@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import com.ewide.test.mikkel.customui.databinding.CustomToolbarBinding
 
 @SuppressLint("Recycle")
@@ -25,6 +26,7 @@ class CustomToolbar @JvmOverloads constructor(context: Context, attrs: Attribute
             binding.tvToolbarTitle.setText(resources.getText(typedArray.getResourceId(R.styleable.CustomToolbar_toolbarTitle, R.string.defaultToolbarTitle))).toString()
             binding.tvToolbarTitle.setTextColor(resources.getColor(typedArray.getResourceId(R.styleable.CustomToolbar_textColor, R.color.white), resources.newTheme()))
             binding.toolbar.setBackgroundColor(resources.getColor(typedArray.getResourceId(R.styleable.CustomToolbar_backgroundColor, R.color.purple_200), resources.newTheme()))
+            binding.tvToolbarFavorite.isVisible = typedArray.getBoolean(R.styleable.CustomToolbar_showFavoriteButton, true)
 
             typedArray.recycle()
         }
