@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ewide.test.mikkel.MainActivity
 import com.ewide.test.mikkel.R
 import com.ewide.test.mikkel.adapter.ItemAdapter
 import com.ewide.test.mikkel.base.BaseFragmentVM
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.databinding.FragmentFavoritePageBinding
 import com.ewide.test.mikkel.extension.observe
-import com.ewide.test.mikkel.model.ListCharacterResponse
 import com.ewide.test.mikkel.model.local.ListCharacter
+import com.ewide.test.mikkel.route.Routing
 import com.ewide.test.mikkel.viewmodel.CharacterFavoriteVM
 
 class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, CharacterFavoriteVM>(CharacterFavoriteVM::class) {
@@ -28,13 +29,7 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, Charact
     }
 
     override fun onFirstLaunch(savedInstanceState: Bundle?, view: View) {
-        val isAscendingSort = baseViewModel.getSortingData()
-        baseViewModel.getAllListOrderBy(isAscendingSort)
-
-        when(isAscendingSort) {
-            true -> viewBinding?.rbAsc?.isChecked = true
-            false -> viewBinding?.rbDesc?.isChecked = true
-        }
+        handleDefaultSelectSort()
     }
 
     override fun onReExecute() {}
@@ -44,9 +39,11 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, Charact
             when(checkedId) {
                 R.id.rbAsc -> {
                     baseViewModel.saveSortingData(true)
+                    handleDefaultSelectSort()
                 }
                 R.id.rbDesc -> {
                     baseViewModel.saveSortingData(false)
+                    handleDefaultSelectSort()
                 }
             }
         }
@@ -61,7 +58,7 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, Charact
         }
 
         rvAdapter.onClick = {
-
+            Routing.moveToDetailPage(requireActivity() as MainActivity, it)
         }
     }
 
@@ -72,6 +69,16 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, Charact
     private fun handleState(state: UIState?) {
         handleResponseState<List<ListCharacter?>?>(state) {
             rvAdapter.setCharacterData(it)
+        }
+    }
+
+    private fun handleDefaultSelectSort() {
+        val isAscendingSort = baseViewModel.getSortingData()
+        baseViewModel.getAllListOrderBy(isAscendingSort)
+
+        when(isAscendingSort) {
+            true -> viewBinding?.rbAsc?.isChecked = true
+            false -> viewBinding?.rbDesc?.isChecked = true
         }
     }
 }
