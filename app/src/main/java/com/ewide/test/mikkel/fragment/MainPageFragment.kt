@@ -50,6 +50,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, GamesListVM>(Ga
         }
 
         rvAdapter.onAddToFavorite = {
+            showToastAddRemoveFavorite(!it.isFavorite)
             if(it.isFavorite) {
                 baseViewModel.removeFromFavorite(it.setItemToFavoriteCharacterLocal())
             } else {
@@ -81,7 +82,6 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, GamesListVM>(Ga
 
     private fun handleStateFavorite(state: UIState?) {
         handleResponseState<Boolean>(state) {
-            showToastAddRemoveFavorite(it)
             baseViewModel.getAllListLocalOrderBy()
         }
     }

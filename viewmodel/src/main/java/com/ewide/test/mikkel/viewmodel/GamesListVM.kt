@@ -5,7 +5,6 @@ import com.ewide.test.mikkel.base.BaseViewModel
 import com.ewide.test.mikkel.base.helper.NetworkHandler
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.extension.getGeneralError
-import com.ewide.test.mikkel.model.ListCharacterResponse
 import com.ewide.test.mikkel.model.local.ListCharacter
 import com.ewide.test.mikkel.room.DBConfig
 import com.ewide.test.mikkel.room.queryAllFavoriteCharacter
@@ -16,9 +15,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class GamesListVM(
-    networkHandler: NetworkHandler,
-    private val characterUseCase: CharacterUseCase,
-    private val roomConfig: DBConfig,
+    networkHandler: NetworkHandler? = null,
+    private val characterUseCase: CharacterUseCase? = null,
+    private val roomConfig: DBConfig? = null,
 ) : BaseViewModel(networkHandler) {
 
     private val _characterListStateEvent = MutableLiveData<UIState>()
@@ -48,7 +47,7 @@ class GamesListVM(
                 }
 
             }.launch(Dispatchers.IO) {
-                characterUseCase.getAllCharacter(title).collectLatest {
+                characterUseCase?.getAllCharacter(title)?.collectLatest {
                     _characterListStateEvent.postValue(UIState.OnFinishLoading)
 
                     safeScopeFun().launch(Dispatchers.IO) {
@@ -63,7 +62,7 @@ class GamesListVM(
 
     fun getAllListLocalOrderBy() {
         safeScopeFun().launch(Dispatchers.IO) {
-            val data = roomConfig.dataDao().queryAllFavoriteCharacter(true)
+            val data = roomConfig?.dataDao()?.queryAllFavoriteCharacter(true)
             _characterFavoriteStateListEvent.postValue(UIState.OnSuccess(data))
         }
     }
@@ -74,14 +73,14 @@ class GamesListVM(
 
     fun addToFavorite(dataChar: ListCharacter) {
         safeScopeFun().launch(Dispatchers.IO) {
-            roomConfig.dataDao().insert(dataChar)
+            roomConfig?.dataDao()?.insert(dataChar)
             _characterFavoriteStateEvent.postValue(UIState.OnSuccess(true))
         }
     }
 
     fun removeFromFavorite(dataChar: ListCharacter) {
         safeScopeFun().launch(Dispatchers.IO) {
-            roomConfig.dataDao().deleteFavoriteItemById(dataChar.gameID.orEmpty())
+            roomConfig?.dataDao()?.deleteFavoriteItemById(dataChar.gameID.orEmpty())
             _characterFavoriteStateEvent.postValue(UIState.OnSuccess(false))
         }
     }

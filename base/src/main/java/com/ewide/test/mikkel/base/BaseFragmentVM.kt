@@ -18,11 +18,11 @@ abstract class BaseFragmentVM<VB : ViewBinding, VM : BaseViewModel>(clazz: KClas
 
     abstract fun observeViewModel(viewModel: VM)
 
-    fun showToastAddRemoveFavorite(isSuccess: Boolean) {
-        if(isSuccess) {
-            showToast(getString(R.string.success_add_favorite))
-        } else {
-            showToast(getString(R.string.success_remove_favorite))
+    fun showToastAddRemoveFavorite(isSuccess: Boolean?) {
+        if(isSuccess == null) return
+        when(isSuccess) {
+            true -> showToast(getString(R.string.success_add_favorite))
+            false -> showToast(getString(R.string.success_remove_favorite))
         }
     }
 

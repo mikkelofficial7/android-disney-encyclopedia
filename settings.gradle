@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Disneys"
+rootProject.name = "Mikkel"
 include ':app'
 include ':base'
 include ':di'

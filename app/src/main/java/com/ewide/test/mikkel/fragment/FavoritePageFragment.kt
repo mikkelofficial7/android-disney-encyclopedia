@@ -54,6 +54,7 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, GamesFa
         }
 
         rvAdapter.onAddToFavorite = {
+            showToastAddRemoveFavorite(false)
             baseViewModel.removeFromFavorite(it)
         }
 
@@ -74,8 +75,7 @@ class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, GamesFa
     }
 
     private fun handleState(state: UIState?) {
-        handleResponseState<Boolean>(state) {
-            showToastAddRemoveFavorite(it)
+        handleResponseState<Boolean?>(state) {
             handleDefaultSelectSort()
         }
     }
