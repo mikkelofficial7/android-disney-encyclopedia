@@ -19,6 +19,7 @@ class FavoritePageFragment : BaseFragmentVM<FragmentDetailPageBinding, Character
     }
 
     override fun onFirstLaunch(savedInstanceState: Bundle?, view: View) {
+        baseViewModel.getAllListOrderBy(true)
     }
 
     override fun onReExecute() {}

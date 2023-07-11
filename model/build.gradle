@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -39,4 +40,8 @@ dependencies {
     implementation testLibraries.testMonitor
     implementation testLibraries.junitExt
     implementation testLibraries.junit
+
+    implementation androidX.roomRuntime
+    annotationProcessor androidX.roomCompiler
+    implementation androidX.roomKtx
 }

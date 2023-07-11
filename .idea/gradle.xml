@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/extension" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/room" />
             <option value="$PROJECT_DIR$/viewmodel" />
           </set>
         </option>

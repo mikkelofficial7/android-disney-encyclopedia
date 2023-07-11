@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 class NetworkModule  {
     companion object {
         private fun httpInterceptor() = HttpLoggingInterceptor().apply {
-            return HttpLoggingInterceptor { message ->
+            return HttpLoggingInterceptor { _ ->
             }.apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }

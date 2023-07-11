@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -43,11 +44,13 @@ dependencies {
     implementation libraries.coroutineAdapter
     implementation libraries.retrofitMoshi
 
+    implementation androidX.roomRuntime
+    annotationProcessor androidX.roomCompiler
+    implementation androidX.roomKtx
+
     implementation testLibraries.testMonitor
     implementation testLibraries.junitExt
     implementation testLibraries.junit
 
-    api project(path: ':network')
-    api project(path: ':base')
     api project(path: ':viewmodel')
 }

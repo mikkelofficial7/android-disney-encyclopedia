@@ -11,7 +11,7 @@ class ViewModelModule {
         val viewModelModule = module(override = true) {
             viewModel { CharacterListVM(get(), get()) }
             viewModel { CharacterDetailVM(get(), get()) }
-            viewModel { CharacterFavoriteVM() }
+            viewModel { CharacterFavoriteVM(get()) }
         }
     }
 }

@@ -35,7 +35,7 @@ ext {
     flavorVersionsName = "1.0"
 
     configVersion = [
-            applicationId: "com.example.moviedbapp"
+            applicationId: "com.ewide.test.mikkel"
     ]
 
     configVersion = [

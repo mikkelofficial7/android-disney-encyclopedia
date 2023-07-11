@@ -28,40 +28,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
-    implementation ktxDefault.stdlib
-    implementation ktxDefault.coroutinesCore
-    implementation ktxDefault.coroutinesAndroid
-
-    // AndroidX
-    implementation androidX.appCompatX
-    implementation androidX.coreKtx
-
-    implementation androidX.recyclerX
-    implementation androidX.cardX
-    implementation androidX.fragmentKtx
-    implementation androidX.constraintLayout
-    implementation androidX.lifecycleExtensions
-    implementation androidX.lifecycleVmExt
-    implementation androidX.material
-
-    //network
-    implementation libraries.retrofit
-
-    // Dependency injection
-    implementation libraries.koinViewmodel
-    implementation libraries.javaxInject
-
-    //ssp
-    implementation libraries.ssp
-    implementation libraries.sdp
-
     implementation androidX.roomRuntime
     annotationProcessor androidX.roomCompiler
     implementation androidX.roomKtx
@@ -69,4 +38,7 @@ dependencies {
     implementation testLibraries.testMonitor
     implementation testLibraries.junitExt
     implementation testLibraries.junit
+
+    api project(path: ':base')
+    api project(path: ':model')
 }

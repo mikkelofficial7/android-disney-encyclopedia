@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -38,11 +39,15 @@ dependencies {
     implementation androidX.lifecycleExtensions
     implementation androidX.lifecycleVmExt
 
+    implementation androidX.roomRuntime
+    annotationProcessor androidX.roomCompiler
+    implementation androidX.roomKtx
+
     implementation testLibraries.testMonitor
     implementation testLibraries.junitExt
     implementation testLibraries.junit
 
     api project(path: ':network')
     api project(path: ':extension')
-
+    api project(path: ':room')
 }
