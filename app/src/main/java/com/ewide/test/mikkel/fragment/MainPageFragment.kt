@@ -18,7 +18,7 @@ import com.ewide.test.mikkel.viewmodel.GamesListVM
 
 class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, GamesListVM>(GamesListVM::class) {
     private val rvAdapter by lazy {
-        ItemAdapter<ListCharacterResponse>()
+        ItemAdapter(ListCharacterResponse::class.java)
     }
 
     override fun bindToolbar(): Toolbar? = viewBinding?.customToolbar?.getToolbar()

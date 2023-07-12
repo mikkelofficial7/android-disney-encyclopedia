@@ -8,7 +8,7 @@ import com.ewide.test.mikkel.databinding.ItemCharacterBinding
 import com.ewide.test.mikkel.model.ListCharacterResponse
 import com.ewide.test.mikkel.model.local.ListCharacter
 
-class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ItemAdapter<T>(val data: Class<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var mList: ArrayList<T?>? = arrayListOf()
     internal var onClick: (String) -> Unit = {}
     internal var onAddToFavorite: (T) -> Unit = {}
@@ -20,7 +20,7 @@ class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             false
         )
 
-        return ViewHolderVideo(binding, onClick, onAddToFavorite)
+        return ViewHolderVideoGame(binding, onClick, onAddToFavorite)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -31,55 +31,54 @@ class ItemAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolderVideo<*>).bind(mList?.get(position))
+        when(data) {
+            ListCharacterResponse::class.java -> (holder as ViewHolderVideoGame<*>).bindApi(mList?.get(position))
+            ListCharacter::class.java -> (holder as ViewHolderVideoGame<*>).bindLocal(mList?.get(position))
+        }
     }
 
     override fun getItemCount(): Int {
         return mList?.size ?: 0
     }
 
-    class ViewHolderVideo<T>(
+    class ViewHolderVideoGame<T>(
         private val itemBinding: ItemCharacterBinding,
         private val onClick: (String) -> Unit,
         private val onAddToFavorite: (T) -> Unit
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun <S>bind(video: S) {
-            when(video) {
-                is ListCharacterResponse -> {
-                    val itemVideo = video as ListCharacterResponse
+        fun <S>bindApi(game: S) {
+            val itemVideoGame = game as ListCharacterResponse
 
-                    itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
-                    itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
-                    itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
-                    itemBinding.customViewHolder.setFavoriteHeartIcon(itemVideo.isFavorite)
+            itemBinding.customViewHolder.setCharacterName(itemVideoGame.external.orEmpty())
+            itemBinding.customViewHolder.setCharacterAlias(itemVideoGame.internalName.orEmpty())
+            itemBinding.customViewHolder.setCharacterLogo(itemVideoGame.thumb.orEmpty())
+            itemBinding.customViewHolder.setFavoriteHeartIcon(itemVideoGame.isFavorite)
 
-                    itemBinding.root.setOnClickListener {
-                        onClick(itemVideo.gameID.orEmpty())
-                    }
-
-                    itemBinding.customViewHolder.clickOnFavorite {
-                        onAddToFavorite(video as T)
-                    }
-                }
-                is ListCharacter -> {
-                    val itemVideo = video as ListCharacter
-
-                    itemBinding.customViewHolder.setCharacterName(itemVideo.external.orEmpty())
-                    itemBinding.customViewHolder.setCharacterAlias(itemVideo.internalName.orEmpty())
-                    itemBinding.customViewHolder.setCharacterLogo(itemVideo.thumb.orEmpty())
-                    itemBinding.customViewHolder.setFavoriteHeartIcon(true)
-
-                    itemBinding.root.setOnClickListener {
-                        onClick(itemVideo.gameID.orEmpty())
-                    }
-
-                    itemBinding.customViewHolder.clickOnFavorite {
-                        onAddToFavorite(video as T)
-                    }
-                }
+            itemBinding.root.setOnClickListener {
+                onClick(itemVideoGame.gameID.orEmpty())
             }
 
+            itemBinding.customViewHolder.clickOnFavorite {
+                onAddToFavorite(game as T)
+            }
+        }
+
+        fun <S>bindLocal(game: S) {
+            val itemVideoGame = game as ListCharacter
+
+            itemBinding.customViewHolder.setCharacterName(itemVideoGame.external.orEmpty())
+            itemBinding.customViewHolder.setCharacterAlias(itemVideoGame.internalName.orEmpty())
+            itemBinding.customViewHolder.setCharacterLogo(itemVideoGame.thumb.orEmpty())
+            itemBinding.customViewHolder.setFavoriteHeartIcon(true)
+
+            itemBinding.root.setOnClickListener {
+                onClick(itemVideoGame.gameID.orEmpty())
+            }
+
+            itemBinding.customViewHolder.clickOnFavorite {
+                onAddToFavorite(game as T)
+            }
         }
     }
 }

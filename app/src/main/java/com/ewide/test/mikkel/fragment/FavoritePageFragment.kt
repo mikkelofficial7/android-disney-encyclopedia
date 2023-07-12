@@ -17,7 +17,7 @@ import com.ewide.test.mikkel.viewmodel.GamesFavoriteVM
 
 class FavoritePageFragment : BaseFragmentVM<FragmentFavoritePageBinding, GamesFavoriteVM>(GamesFavoriteVM::class) {
     private val rvAdapter by lazy {
-        ItemAdapter<ListCharacter>()
+        ItemAdapter(ListCharacter::class.java)
     }
 
     override fun bindToolbar(): Toolbar? = viewBinding?.customToolbar?.getToolbar()
