@@ -11,7 +11,7 @@ class ViewModelModule {
         val viewModelModule = module(override = true) {
             viewModel { GamesListVM(get(), get(), get()) }
             viewModel { GamesDetailVM(get(), get()) }
-            viewModel { GamesFavoriteVM(get(), get()) }
+            viewModel { GamesFavoriteVM(get(), get(), get()) }
         }
     }
 }

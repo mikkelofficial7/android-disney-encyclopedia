@@ -66,6 +66,10 @@ dependencies {
     kapt androidX.roomCompiler
     implementation androidX.roomKtx
 
+    //preference data store
+    implementation androidX.dataStore
+    implementation androidX.preferenceStore
+
     implementation testLibraries.testMonitor
     implementation testLibraries.junitExt
     implementation testLibraries.junit
