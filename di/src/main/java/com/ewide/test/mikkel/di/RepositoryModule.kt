@@ -7,7 +7,7 @@ import org.koin.dsl.module
 class RepositoryModule {
     companion object {
         val repositoryModule = module(override = true) {
-            single<CharacterRepository> { return@single CharacterRepositoryImpl(get()) }
+            single<CharacterRepository> { return@single CharacterRepositoryImpl(get(), get()) }
         }
     }
 }

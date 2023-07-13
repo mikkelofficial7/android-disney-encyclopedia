@@ -16,8 +16,7 @@ import kotlinx.coroutines.launch
 
 class GamesListVM(
     networkHandler: NetworkHandler? = null,
-    private val characterUseCase: CharacterUseCase? = null,
-    private val roomConfig: DBConfig? = null,
+    private val characterUseCase: CharacterUseCase? = null
 ) : BaseViewModel(networkHandler) {
 
     private val _characterListStateEvent = MutableLiveData<UIState>()
@@ -62,8 +61,8 @@ class GamesListVM(
 
     fun getAllListLocalOrderBy() {
         safeScopeFun().launch(Dispatchers.IO) {
-            val data = roomConfig?.dataDao()?.queryAllFavoriteCharacter(true)
-            _characterFavoriteStateListEvent.postValue(UIState.OnSuccess(data))
+            val dataFavorite = characterUseCase?.getOneCharacterFromLocalDb(true)
+            _characterFavoriteStateListEvent.postValue(UIState.OnSuccess(dataFavorite))
         }
     }
 
@@ -73,14 +72,14 @@ class GamesListVM(
 
     fun addToFavorite(dataChar: ListCharacter) {
         safeScopeFun().launch(Dispatchers.IO) {
-            roomConfig?.dataDao()?.insert(dataChar)
+            characterUseCase?.addCharacterToFavorite(dataChar)
             _characterFavoriteStateEvent.postValue(UIState.OnSuccess(true))
         }
     }
 
     fun removeFromFavorite(dataChar: ListCharacter) {
         safeScopeFun().launch(Dispatchers.IO) {
-            roomConfig?.dataDao()?.deleteFavoriteItemById(dataChar.gameID.orEmpty())
+            characterUseCase?.removeCharacterFromFavorite(dataChar)
             _characterFavoriteStateEvent.postValue(UIState.OnSuccess(false))
         }
     }

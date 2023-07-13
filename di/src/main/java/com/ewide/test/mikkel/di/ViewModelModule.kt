@@ -9,7 +9,7 @@ import org.koin.dsl.module
 class ViewModelModule {
     companion object {
         val viewModelModule = module(override = true) {
-            viewModel { GamesListVM(get(), get(), get()) }
+            viewModel { GamesListVM(get(), get()) }
             viewModel { GamesDetailVM(get(), get()) }
             viewModel { GamesFavoriteVM(get(), get(), get()) }
         }

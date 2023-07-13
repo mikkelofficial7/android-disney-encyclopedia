@@ -9,14 +9,13 @@ import com.ewide.test.mikkel.base.datastore.BasePreferenceDataStore
 import com.ewide.test.mikkel.base.sharedpreference.BaseSharedPreferences
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.model.local.ListCharacter
-import com.ewide.test.mikkel.room.DBConfig
-import com.ewide.test.mikkel.room.queryAllFavoriteCharacter
+import com.ewide.test.mikkel.viewmodel.usecase.CharacterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GamesFavoriteVM(
-    private val roomConfig: DBConfig,
     private val sharedPreferences: SharedPreferences,
+    private val characterUseCase: CharacterUseCase,
     private val context: Context,
 ) : BaseViewModel() {
 
@@ -35,8 +34,8 @@ class GamesFavoriteVM(
 
     fun getAllListLocalOrderBy(isAscending: Boolean) {
         safeScopeFun().launch(Dispatchers.IO) {
-            val data = roomConfig.dataDao().queryAllFavoriteCharacter(isAscending)
-            _characterFavoriteStateListEvent.postValue(UIState.OnSuccess(data))
+            val dataFavorite = characterUseCase.getOneCharacterFromLocalDb(isAscending)
+            _characterFavoriteStateListEvent.postValue(UIState.OnSuccess(dataFavorite))
         }
     }
 
@@ -64,7 +63,7 @@ class GamesFavoriteVM(
 
     fun removeFromFavorite(dataChar: ListCharacter) {
         safeScopeFun().launch(Dispatchers.IO) {
-            roomConfig.dataDao().deleteFavoriteItemById(dataChar.gameID.orEmpty())
+            characterUseCase.removeCharacterFromFavorite(dataChar)
             _characterFavoriteStateEvent.postValue(UIState.OnSuccess(false))
         }
     }

@@ -87,7 +87,7 @@ class MainPageFragment : BaseFragmentVM<FragmentMainPageBinding, GamesListVM>(Ga
     }
 
     private fun handleStateFavoriteList(state: UIState?) {
-        handleResponseState<List<ListCharacter?>?>(state) {
+        handleResponseState<List<ListCharacter?>>(state) {
             baseViewModel.setListItemFavorite(it)
             baseViewModel.getAllCharacterFromAPI(viewBinding?.searchBar?.text.toString())
         }
