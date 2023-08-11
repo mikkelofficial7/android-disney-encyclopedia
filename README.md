@@ -1,1 +1,2 @@
-# android-disney-encyclopedia
+# android game dictionary search
+Search game list based on title
