@@ -16,9 +16,7 @@ class CustomToolbar @JvmOverloads constructor(context: Context, attrs: Attribute
     init {
         binding = CustomToolbarBinding.inflate(LayoutInflater.from(context), this, true)
         LayoutInflater.from(binding.root.context)
-    }
-
-    init {
+        
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.CustomToolbar)
 
