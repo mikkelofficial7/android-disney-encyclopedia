@@ -6,8 +6,6 @@ import com.ewide.test.mikkel.base.helper.NetworkHandler
 import com.ewide.test.mikkel.base.state.UIState
 import com.ewide.test.mikkel.extension.getGeneralError
 import com.ewide.test.mikkel.model.local.ListCharacter
-import com.ewide.test.mikkel.room.DBConfig
-import com.ewide.test.mikkel.room.queryAllFavoriteCharacter
 import com.ewide.test.mikkel.viewmodel.usecase.CharacterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
